@@ -3,7 +3,7 @@ import re
 from collections import Counter
 
 from qdrant_client import QdrantClient
-from qdrant_client.models import VectorParams, Distance, PointStruct, Filter, FieldCondition, MatchValue, PayloadSchemaType
+from qdrant_client.models import VectorParams, Distance, PointStruct, Filter, FieldCondition, MatchValue, PayloadSchemaType, PointIdsList
 
 
 def lexical_overlap_score(query_text: str, document_text: str) -> float:
@@ -49,6 +49,38 @@ class QdrantStorage:
         points = [PointStruct(id=ids[i], vector=vectors[i], payload=payloads[i]) for i in range(len(ids))]
         self.client.upsert(self.collection, points=points)
 
+    def replace_source(self, ids, vectors, payloads, source_id):
+        if not ids:
+            raise ValueError("Cannot replace a source with no chunks.")
+
+        self.upsert(ids, vectors, payloads)
+        retained_ids = {str(point_id) for point_id in ids}
+        source_filter = Filter(
+            must=[FieldCondition(key="source", match=MatchValue(value=source_id))]
+        )
+        stale_ids = []
+        offset = None
+
+        while True:
+            points, offset = self.client.scroll(
+                collection_name=self.collection,
+                scroll_filter=source_filter,
+                limit=1000,
+                offset=offset,
+                with_payload=False,
+            )
+            stale_ids.extend(
+                point.id for point in points if str(point.id) not in retained_ids
+            )
+            if offset is None:
+                break
+
+        if stale_ids:
+            self.client.delete(
+                collection_name=self.collection,
+                points_selector=PointIdsList(points=stale_ids),
+            )
+
     def list_sources(self):
         points, _ = self.client.scroll(collection_name=self.collection, with_payload=True, limit=1000)
         sources = set()
@@ -89,6 +121,8 @@ class QdrantStorage:
             ranked.append({
                 "text": text,
                 "source": source,
+                "chunk_index": payload.get("chunk_index"),
+                "page": payload.get("page"),
                 "score": combined_score,
             })
 
@@ -96,9 +130,15 @@ class QdrantStorage:
 
         contexts = []
         sources = set()
-        for item in ranked[:top_k]:
+        citations = []
+        for citation_id, item in enumerate(ranked[:top_k], start=1):
             contexts.append(item["text"])
             if item["source"]:
                 sources.add(item["source"])
+            citations.append({"id": citation_id, **item})
 
-        return {"contexts": contexts, "sources": list(sources)}
+        return {
+            "contexts": contexts,
+            "sources": sorted(sources),
+            "citations": citations,
+        }

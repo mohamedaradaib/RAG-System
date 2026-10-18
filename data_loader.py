@@ -5,6 +5,7 @@ from llama_index.readers.file.html import HTMLTagReader
 from llama_index.core.node_parser import SentenceSplitter
 from dotenv import load_dotenv
 from llama_index.core import SimpleDirectoryReader
+from custom_types import RAGChunk
 
 load_dotenv()
 
@@ -20,10 +21,17 @@ def load_and_chunk_file(path: str):
         docs = HTMLTagReader(tag="body").load_data(file=file_path)
     else:
         docs = SimpleDirectoryReader(input_files=[path]).load_data()
-    texts = [doc.text for doc in docs if getattr(doc, "text", None)]
     chunks = []
-    for text in texts:
-        chunks.extend(splitter.split_text(text))
+    for doc in docs:
+        text = getattr(doc, "text", None)
+        if not text:
+            continue
+        metadata = getattr(doc, "metadata", None) or {}
+        page = metadata.get("page_label") or metadata.get("page_number")
+        chunks.extend(
+            RAGChunk(text=chunk, page=page)
+            for chunk in splitter.split_text(text)
+        )
     return chunks
 
 def embed_texts(texts: list[str]) -> list[list[float]]:

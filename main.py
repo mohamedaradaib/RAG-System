@@ -41,11 +41,6 @@ inngest_client = inngest.Inngest(
     throttle=inngest.Throttle(
         limit=2, period=datetime.timedelta(minutes=1)
     ),
-    rate_limit=inngest.RateLimit(
-        limit=1,
-        period=datetime.timedelta(hours=4),
-        key="event.data.source_id",
-  ),
 )
 async def rag_ingest_pdf(ctx: inngest.Context):
     def _load(ctx: inngest.Context) -> RAGChunkAndSrc:
@@ -58,10 +53,18 @@ async def rag_ingest_pdf(ctx: inngest.Context):
         try:
             chunks = chunks_and_src.chunks
             source_id = chunks_and_src.source_id
-            vecs = embed_texts(chunks)
+            vecs = embed_texts([chunk.text for chunk in chunks])
             ids = [str(uuid.uuid5(uuid.NAMESPACE_URL, f"{source_id}:{i}")) for i in range(len(chunks))]
-            payloads = [{"source": source_id, "text": chunks[i]} for i in range(len(chunks))]
-            QdrantStorage().upsert(ids, vecs, payloads)
+            payloads = [
+                {
+                    "source": source_id,
+                    "text": chunk.text,
+                    "chunk_index": i,
+                    **({"page": chunk.page} if chunk.page is not None else {}),
+                }
+                for i, chunk in enumerate(chunks)
+            ]
+            QdrantStorage().replace_source(ids, vecs, payloads, source_id)
             return RAGUpsertResult(ingested=len(chunks))
         except Exception as exc:
             return RAGUpsertResult(ingested=0, error=_friendly_openai_error(exc))
@@ -85,7 +88,11 @@ async def rag_query_pdf_ai(ctx: inngest.Context):
             query_vec = embed_texts([question])[0]
             store = QdrantStorage()
             found = store.search(query_vec, top_k, query_text=question)
-            return RAGSearchResult(contexts=found["contexts"], sources=found["sources"])
+            return RAGSearchResult(
+                contexts=found["contexts"],
+                sources=found["sources"],
+                citations=found["citations"],
+            )
         except Exception as exc:
             return RAGSearchResult(contexts=[], sources=[], error=_friendly_openai_error(exc))
 
@@ -110,7 +117,18 @@ async def rag_query_pdf_ai(ctx: inngest.Context):
             "num_contexts": 0,
         }
 
-    context_block = "\n\n".join(f"- {c}" for c in found.contexts)
+    context_block = "\n\n".join(
+        f"[{citation.id}] Source: {citation.source}"
+        + (
+            f", page {citation.page}"
+            if citation.page is not None
+            else f", chunk {citation.chunk_index + 1}"
+            if citation.chunk_index is not None
+            else ""
+        )
+        + f"\n{citation.text}"
+        for citation in found.citations
+    )
     user_content = build_rag_prompt(question, context_block, chat_history)
 
     try:
@@ -126,18 +144,24 @@ async def rag_query_pdf_ai(ctx: inngest.Context):
                 "max_tokens": 1024,
                 "temperature": 0.2,
                 "messages": [
-                    {"role": "system", "content": "You answer questions using only the provided context and previous conversation when relevant."},
+                    {"role": "system", "content": "Answer only from the provided context and previous conversation when relevant. Cite supporting context using its [number]. Never invent a citation."},
                     {"role": "user", "content": user_content}
                 ]
             }
         )
 
         answer = res["choices"][0]["message"]["content"].strip()
-        return {"answer": answer, "sources": found.sources, "num_contexts": len(found.contexts)}
+        return {
+            "answer": answer,
+            "sources": found.sources,
+            "citations": [citation.model_dump() for citation in found.citations],
+            "num_contexts": len(found.contexts),
+        }
     except Exception as exc:
         return {
             "answer": _friendly_openai_error(exc),
             "sources": found.sources,
+            "citations": [citation.model_dump() for citation in found.citations],
             "num_contexts": len(found.contexts),
             "error": _friendly_openai_error(exc),
         }

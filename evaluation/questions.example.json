@@ -1,0 +1,6 @@
+[
+  {
+    "question": "What is the main topic covered in this document?",
+    "expected_sources": ["replace-with-an-indexed-filename.pdf"]
+  }
+]

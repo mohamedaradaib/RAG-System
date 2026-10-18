@@ -138,8 +138,7 @@ st.markdown(
     .stTextArea > label,
     .stSlider > label,
     .stSelectbox > label,
-    .stNumberInput > label,
-    p, label, div, span, li, a, button, input, textarea {
+    .stNumberInput > label {
         color: var(--gray-100) !important;
     }
     [data-testid="stFileUploaderDropzone"] {
@@ -230,6 +229,409 @@ st.markdown(
         border-top: 1px solid rgba(209, 213, 219, 0.12);
         z-index: 1000;
     }
+    :root {
+        --canvas: #f4f6f7;
+        --surface: #ffffff;
+        --ink: #242b30;
+        --muted: #647078;
+        --line: #d9e0e4;
+        --accent: #424b50;
+        --accent-hover: #30383d;
+    }
+    html, body, [data-testid="stAppViewContainer"], .stApp, section.main, .main {
+        background: var(--canvas) !important;
+        color: var(--ink) !important;
+    }
+    .block-container {
+        max-width: 76rem;
+        padding-top: 5.5rem;
+        padding-bottom: 4rem;
+        background: var(--canvas) !important;
+    }
+    .st-key-app-header {
+        padding: 0.55rem 1.5rem;
+        background: #242b30;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 3px 14px rgba(36, 43, 48, 0.12);
+    }
+    .st-key-app-header .header-title {
+        color: #f4f6f7 !important;
+        font-size: 1.2rem;
+        font-weight: 650;
+    }
+    .st-key-app-header .stButton > button {
+        background: transparent !important;
+        border-color: rgba(244, 246, 247, 0.32) !important;
+        color: #f4f6f7 !important;
+    }
+    .st-key-app-header .stButton > button *,
+    .st-key-app-header .stLinkButton > a,
+    .st-key-app-header .stLinkButton > a * {
+        color: #f4f6f7 !important;
+    }
+    [data-testid="stFileUploaderDropzone"] button,
+    [data-testid="stFileUploaderDropzone"] button * {
+        color: #ffffff !important;
+    }
+    [data-testid="stSidebar"] {
+        background: #e9edef !important;
+        border-right: 1px solid var(--line);
+    }
+    [data-testid="stSidebar"] * {
+        color: var(--ink) !important;
+    }
+    [data-testid="stFileUploaderDropzone"] {
+        width: 100%;
+        aspect-ratio: auto;
+        min-height: 8rem !important;
+        border: 1px dashed #aab5ba;
+        border-radius: 12px;
+        background: var(--surface) !important;
+        box-shadow: none;
+    }
+    [data-testid="stFileUploaderDropzone"]:hover {
+        border-color: var(--accent);
+        background: #f8fafb !important;
+    }
+    .stTextInput input,
+    .stTextArea textarea,
+    .stSelectbox select,
+    .stNumberInput input {
+        background: var(--surface) !important;
+        color: var(--ink) !important;
+        border: 1px solid var(--line) !important;
+        border-radius: 8px;
+    }
+    .stTextInput input::placeholder,
+    .stTextArea textarea::placeholder {
+        color: var(--muted) !important;
+    }
+    .stTextInput label,
+    .stTextArea label,
+    .stSlider label,
+    [data-testid="stFileUploader"] > label {
+        color: var(--ink) !important;
+    }
+    .stTextInput input:focus,
+    .stTextArea textarea:focus {
+        border-color: #68757c !important;
+        box-shadow: 0 0 0 2px rgba(66, 75, 80, 0.14) !important;
+    }
+    .stButton > button,
+    [data-testid="stFormSubmitButton"] button {
+        background: var(--accent) !important;
+        color: #ffffff !important;
+        border: 1px solid var(--accent) !important;
+        border-radius: 8px !important;
+        transition: background 0.15s ease, transform 0.15s ease;
+    }
+    .stButton > button:hover,
+    [data-testid="stFormSubmitButton"] button:hover {
+        background: var(--accent-hover) !important;
+        border-color: var(--accent-hover) !important;
+        transform: translateY(-1px);
+    }
+    [data-testid="stPopover"] [data-testid="stPopoverButton"] {
+        background: transparent !important;
+        border: 1px solid rgba(243, 246, 242, 0.32) !important;
+        color: #f3f6f2 !important;
+    }
+    [data-testid="stPopover"] [data-testid="stPopoverButton"] * {
+        color: #f3f6f2 !important;
+    }
+    [data-testid="stPopoverBody"] {
+        background: var(--surface) !important;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+    }
+    [data-testid="stChatMessage"] {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+    }
+    [data-testid="stForm"] {
+        padding: 1rem 1rem 0.25rem;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+    }
+    [data-testid="stSidebar"] h2 {
+        text-align: left;
+        font-size: 1rem;
+    }
+    .page-intro {
+        margin: 1rem 0 1.25rem;
+        padding: 1.25rem 0 1rem;
+        border-bottom: 1px solid var(--line);
+    }
+    .page-intro .eyebrow {
+        margin-bottom: 0.35rem;
+        color: var(--accent) !important;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .page-intro h1 {
+        margin: 0;
+        color: var(--ink) !important;
+        font-size: 1.8rem;
+        text-align: left;
+    }
+    .fixed-footer {
+        color: #d5dde1 !important;
+        background: #242b30;
+    }
+    [data-testid="stFileUploaderDropzone"] button {
+        background: var(--accent) !important;
+        border-color: var(--accent) !important;
+    }
+    [data-testid="stFileUploaderDropzone"] button:hover {
+        background: var(--accent-hover) !important;
+        border-color: var(--accent-hover) !important;
+    }
+    [data-testid="stSlider"] [data-rac][data-orientation="horizontal"] > div[data-rac] > div:first-child {
+        background: #d7d7d5 !important;
+    }
+    [data-testid="stSlider"] [data-rac][data-orientation="horizontal"] > div[data-rac] > div[data-rac] {
+        background: var(--accent) !important;
+        border: 2px solid #ffffff !important;
+    }
+    [data-testid="stSlider"] [data-rac][data-orientation="horizontal"] > div[data-rac] > div[data-rac]:active,
+    [data-testid="stSlider"] [data-rac][data-orientation="horizontal"] > div[data-rac] > div[data-rac]:focus-within {
+        background: var(--accent-hover) !important;
+        box-shadow: 0 0 0 3px rgba(66, 66, 65, 0.2) !important;
+    }
+    @media (max-width: 640px) {
+        .block-container {
+            padding: 5rem 1rem 4rem;
+        }
+        .st-key-app-header {
+            padding: 0.45rem 0.65rem;
+        }
+        .st-key-app-header [data-testid="stHorizontalBlock"] {
+            grid-template-columns: 5.5rem minmax(0, 1fr) 5.5rem;
+            gap: 0.2rem;
+        }
+        .st-key-app-header .header-title {
+            font-size: 0.95rem;
+        }
+        .st-key-app-header .stLinkButton > a {
+            padding: 0.45rem 0.3rem !important;
+            font-size: 0.8rem;
+        }
+        .page-intro h1 {
+            font-size: 1.5rem;
+        }
+    }
+    :root {
+        --canvas: #e7e7e7;
+        --surface: #ffffff;
+        --ink: #191919;
+        --muted: #4f4f4f;
+        --line: #bdbdbd;
+        --accent: #242424;
+        --accent-hover: #090909;
+    }
+    html, body, [data-testid="stAppViewContainer"], .stApp, section.main, .main {
+        background: linear-gradient(145deg, #f0f0f0, var(--canvas)) !important;
+        color: var(--ink) !important;
+    }
+    .block-container {
+        max-width: 72rem;
+        padding-top: 2.25rem;
+        padding-bottom: 2rem;
+        background: transparent !important;
+    }
+    .st-key-app-header {
+        padding: 0.65rem 1.5rem;
+        background: #1c1c1c;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+    .st-key-app-header .header-title {
+        color: #ffffff !important;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+    .st-key-app-header .stButton > button {
+        border-color: rgba(255, 255, 255, 0.32) !important;
+        border-radius: 7px !important;
+    }
+    [data-testid="stSidebar"] {
+        background: #dedede !important;
+        border-right: 1px solid var(--line);
+    }
+    [data-testid="stFileUploader"] {
+        align-items: flex-start;
+    }
+    [data-testid="stFileUploaderDropzone"] {
+        width: min(100%, 28rem);
+        min-height: 7rem !important;
+        margin: 0;
+        border: 1px dashed #858585;
+        border-radius: 8px;
+        background: #ffffff !important;
+        transition: border-color 0.18s ease, background 0.18s ease;
+    }
+    [data-testid="stFileUploaderDropzone"]:hover {
+        border-color: var(--accent);
+        background: #ededed !important;
+    }
+    .page-intro {
+        margin: 0 0 1.5rem;
+        padding: 1.25rem 0 1.35rem;
+        border-bottom: 1px solid #b8b8b8;
+    }
+    .page-intro .eyebrow {
+        color: var(--muted) !important;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+    }
+    .page-intro h1 {
+        color: var(--ink) !important;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 2.4rem;
+        font-weight: 500;
+        line-height: 1.12;
+    }
+    .st-key-document-library {
+        margin: 0 0 2.25rem;
+        padding: 1.15rem 1.35rem 0.8rem;
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--accent);
+        border-radius: 8px;
+        background: #fafafa;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
+    }
+    .st-key-document-library [data-testid="stMarkdownContainer"] p {
+        color: var(--muted);
+    }
+    .st-key-document-library [data-testid="stHorizontalBlock"] {
+        gap: 2rem;
+    }
+    .st-key-document-library .library-source-row {
+        padding: 0.45rem 0;
+        border-bottom: 1px solid var(--line);
+    }
+    .st-key-suggest_summary button,
+    .st-key-suggest_dates button,
+    .st-key-suggest_compare button {
+        min-height: 2.65rem;
+        background: #ffffff !important;
+        color: var(--accent) !important;
+        border-color: #999999 !important;
+        font-size: 0.84rem;
+    }
+    .st-key-suggest_summary button:hover,
+    .st-key-suggest_dates button:hover,
+    .st-key-suggest_compare button:hover {
+        background: #e3e3e3 !important;
+        border-color: var(--accent) !important;
+        transform: translateY(-1px);
+    }
+    [data-testid="stSidebar"] h2,
+    [data-testid="stAppViewContainer"] h3 {
+        color: var(--ink) !important;
+    }
+    [data-testid="stAppViewContainer"] h3 {
+        font-size: 1.08rem;
+        font-weight: 700;
+    }
+    .stTextInput input,
+    .stTextArea textarea,
+    .stSelectbox select,
+    .stNumberInput input {
+        border-radius: 7px;
+        border-color: #a9a9a9 !important;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+    .stTextInput input:focus,
+    .stTextArea textarea:focus {
+        border-color: var(--accent) !important;
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.17) !important;
+    }
+    .stButton > button,
+    [data-testid="stFormSubmitButton"] button,
+    [data-testid="stFileUploaderDropzone"] button {
+        border-radius: 7px !important;
+        font-weight: 650;
+        transition: background 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
+    }
+    [data-testid="stFormSubmitButton"] button {
+        background: var(--accent) !important;
+        border-color: var(--accent) !important;
+    }
+    [data-testid="stFormSubmitButton"] button:hover {
+        background: var(--accent-hover) !important;
+        border-color: var(--accent-hover) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+    }
+    .stButton > button:hover,
+    [data-testid="stFileUploaderDropzone"] button:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+    }
+    [data-testid="stForm"] {
+        padding: 1.25rem 1.25rem 0.5rem;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+    [data-testid="stChatMessage"] {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+    }
+    [data-testid="stAlert"] {
+        background: #e2e2e2 !important;
+        border: 1px solid var(--line) !important;
+        color: var(--ink) !important;
+    }
+    [data-testid="stAlert"] * {
+        color: var(--ink) !important;
+    }
+    .fixed-footer {
+        position: relative;
+        margin-top: 3rem;
+        padding: 1rem;
+        color: var(--muted) !important;
+        background: transparent;
+        border-top: 1px solid var(--line);
+        font-size: 0.75rem;
+    }
+    @media (max-width: 640px) {
+        .block-container {
+            padding: 1.25rem 1rem 1.5rem;
+        }
+        .st-key-app-header {
+            padding: 0.5rem 0.6rem;
+        }
+        .st-key-app-header .header-title {
+            font-size: 0.95rem;
+        }
+        .page-intro {
+            padding: 1rem 0 1.1rem;
+        }
+        .page-intro h1 {
+            font-size: 1.85rem;
+        }
+        .st-key-document-library {
+            margin-bottom: 1.75rem;
+            padding: 0.9rem 0.85rem 0.6rem;
+        }
+        .st-key-document-library [data-testid="stHorizontalBlock"] {
+            gap: 0.75rem;
+        }
+        [data-testid="stForm"] {
+            padding: 0.9rem 0.85rem 0.35rem;
+        }
+        .fixed-footer {
+            margin-top: 2rem;
+            padding: 0.85rem 0.25rem;
+            line-height: 1.6;
+        }
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -239,6 +641,11 @@ st.markdown(
 def get_inngest_client() -> inngest.Inngest:
     is_production = os.getenv("INNGEST_IS_PRODUCTION", "false").lower() == "true"
     return inngest.Inngest(app_id="rag_app", is_production=is_production)
+
+
+@st.cache_resource
+def get_qdrant_storage() -> QdrantStorage:
+    return QdrantStorage()
 
 
 def upload_document(file) -> str:
@@ -258,13 +665,77 @@ def upload_document(file) -> str:
     return response.json()["event_id"]
 
 
+def render_citations(citations: list[dict]) -> None:
+    with st.expander(f"Sources ({len(citations)})"):
+        for citation in citations:
+            location = (
+                f"Page {citation['page']}"
+                if citation.get("page") is not None
+                else f"Chunk {citation['chunk_index'] + 1}"
+                if citation.get("chunk_index") is not None
+                else ""
+            )
+            st.text(f"[{citation['id']}] {citation['source']} {location}".strip())
+            st.text(citation["text"])
+
+
 header_slot = st.empty()
-uploaded = st.file_uploader(
-    "Upload or drag and drop a Document",
-    type=["pdf", "docx", "html", "htm", "txt", "md", "csv"],
-    accept_multiple_files=True,
+with header_slot.container(key="app-header"):
+    _, title_column, contact_column = st.columns([1, 4, 1])
+    with title_column:
+        st.markdown('<div class="header-title">RAG Document Assistant</div>', unsafe_allow_html=True)
+    with contact_column:
+        st.link_button("Contact", "mailto:mohamedaradaib1@gmail.com", use_container_width=True)
+
+st.markdown('<div id="documents"></div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="page-intro"><div class="eyebrow">Knowledge workspace</div>'
+    '<h1>Ask your documents.</h1></div>',
+    unsafe_allow_html=True,
 )
-st.caption("Document types: PDF, DOCX, HTML, Markdown, TXT, CSV")
+with st.container(key="document-library"):
+    try:
+        qdrant_storage = get_qdrant_storage()
+        indexed_sources = qdrant_storage.list_sources()
+        index_unavailable = False
+    except Exception:
+        qdrant_storage = None
+        indexed_sources = []
+        index_unavailable = True
+
+    sources_column, upload_column = st.columns([1, 1.45], vertical_alignment="top")
+    with sources_column:
+        st.subheader("Your library")
+        if index_unavailable:
+            st.caption("The document index is unavailable. Start Qdrant to manage indexed files.")
+        elif indexed_sources:
+            st.caption(f"{len(indexed_sources)} indexed document{'s' if len(indexed_sources) != 1 else ''}")
+            for source in indexed_sources:
+                source_column, delete_column = st.columns([4, 1], vertical_alignment="center")
+                source_column.text(source)
+                if delete_column.button(
+                    "Delete",
+                    key=f"delete_source_{source}",
+                    help=f"Remove {source} from the vector index",
+                ):
+                    try:
+                        qdrant_storage.delete_source(source)
+                        st.rerun()
+                    except Exception as exc:
+                        st.error(f"Couldn't remove {source}: {exc}")
+        else:
+            st.caption("No indexed documents yet. Upload a file to build your library.")
+
+    with upload_column:
+        st.subheader("Add documents")
+        st.caption("Upload files to ground answers in your own sources.")
+        uploaded = st.file_uploader(
+            "Add documents",
+            type=["pdf", "docx", "html", "htm", "txt", "md", "csv"],
+            accept_multiple_files=True,
+            label_visibility="collapsed",
+        )
+        st.caption("PDF, DOCX, HTML, Markdown, TXT, CSV")
 
 async def send_rag_query_event(question: str, top_k: int, chat_history: list[dict] | None = None) -> None:
     client = get_inngest_client()
@@ -323,6 +794,7 @@ def wait_for_run_output(event_id: str, timeout_s: float = 120.0, poll_interval_s
 if "processed_uploads" not in st.session_state:
     st.session_state.processed_uploads = set()
 
+upload_completed = False
 if not uploaded:
     st.session_state.processed_uploads.clear()
 else:
@@ -331,70 +803,91 @@ else:
         if fingerprint in st.session_state.processed_uploads:
             continue
 
-        with st.spinner(f"Processing {file.name}..."):
-            event_id = upload_document(file)
-            output = wait_for_run_output(event_id)
-        st.session_state.processed_uploads.add(fingerprint)
-        st.success(f"Processed {file.name}: {output.get('ingested', 0)} chunks.")
-
-with header_slot.container(key="app-header"):
-    documents_column, title_column, contact_column = st.columns([1, 4, 1])
-    with documents_column:
-        with st.popover("Documents", use_container_width=True):
-            try:
-                indexed_sources = sorted(QdrantStorage().list_sources())
-            except Exception:
-                indexed_sources = []
-
-            if indexed_sources:
-                for source in indexed_sources:
-                    source_column, delete_column = st.columns([4, 1])
-                    source_column.write(source)
-                    if delete_column.button("Delete", key=f"delete_{source}", help=f"Remove {source} from the vector index"):
-                        try:
-                            QdrantStorage().delete_source(source)
-                            st.success(f"Removed {source}")
-                            st.rerun()
-                        except Exception as exc:
-                            st.error(f"Couldn't remove {source}: {exc}")
+        try:
+            with st.spinner(f"Processing {file.name}..."):
+                event_id = upload_document(file)
+                output = wait_for_run_output(event_id)
+            st.session_state.processed_uploads.add(fingerprint)
+            if output.get("error"):
+                st.session_state.setdefault("upload_notices", []).append(
+                    ("error", f"Couldn't index {file.name}: {output['error']}")
+                )
             else:
-                st.caption("No documents indexed yet.")
-    with title_column:
-        st.markdown('<div class="header-title">RAG Document Assistant</div>', unsafe_allow_html=True)
-    with contact_column:
-        st.link_button("Contact", "mailto:mohamedaradaib1@gmail.com", use_container_width=True)
+                st.session_state.setdefault("upload_notices", []).append(
+                    ("success", f"Indexed {file.name}: {output.get('ingested', 0)} chunks.")
+                )
+                upload_completed = True
+        except Exception as exc:
+            st.session_state.processed_uploads.add(fingerprint)
+            st.session_state.setdefault("upload_notices", []).append(
+                ("error", f"Couldn't process {file.name}: {exc}")
+            )
 
+if upload_completed:
+    st.rerun()
+
+for notice_level, upload_notice in st.session_state.pop("upload_notices", []):
+    getattr(st, notice_level)(upload_notice)
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
+conversation_column, clear_column = st.columns([4, 2])
+with conversation_column:
+    st.subheader("Conversation")
+with clear_column:
+    if st.button(
+        "Clear chat",
+        icon=":material/delete_sweep:",
+        disabled=not st.session_state.messages,
+        help="Clear this conversation",
+        use_container_width=True,
+    ):
+        st.session_state.messages.clear()
+        st.rerun()
+
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
-        if message.get("sources"):
+        if message.get("citations"):
+            render_citations(message["citations"])
+        elif message.get("sources"):
             with st.expander("Sources"):
                 for source in message["sources"]:
                     st.write(f"- {source}")
 
+if not st.session_state.messages:
+    st.caption("Try a question")
+    suggestion_columns = st.columns(3)
+    suggestions = [
+        ("Summarize key points", "Summarize the key points in my uploaded documents.", "suggest_summary"),
+        ("Find key dates", "What important dates or deadlines are mentioned?", "suggest_dates"),
+        ("Compare topics", "Compare the main ideas across my uploaded documents.", "suggest_compare"),
+    ]
+    for suggestion_column, (label, prompt, key) in zip(suggestion_columns, suggestions):
+        if suggestion_column.button(label, key=key, use_container_width=True, disabled=not indexed_sources):
+            st.session_state["rag_question_input"] = prompt
+
 with st.form("rag_query_form"):
-    question = st.text_input("Question")
-    text_to_find = st.text_input("Search")
-    top_k = st.slider("Retrieval depth", min_value=1, max_value=10, value=1, step=1)
-    col_ask, col_find = st.columns([1, 1])
-    with col_ask:
-        ask_submitted = st.form_submit_button("Ask", use_container_width=True)
-    with col_find:
-        find_submitted = st.form_submit_button("Search", use_container_width=True)
+    question = st.text_input(
+        "Question",
+        placeholder="Upload and index a document to start asking",
+        key="rag_question_input",
+        disabled=not indexed_sources,
+    )
+    settings_column, ask_column = st.columns([4, 1], vertical_alignment="bottom")
+    with settings_column:
+        top_k = st.slider("Retrieval depth", min_value=1, max_value=10, value=1, step=1)
+    with ask_column:
+        ask_submitted = st.form_submit_button(
+            "Ask",
+            use_container_width=True,
+            disabled=not indexed_sources,
+        )
 
 if ask_submitted and question.strip():
     prompt = question.strip()
     query = prompt
-elif find_submitted and text_to_find.strip():
-    prompt = text_to_find.strip()
-    query = (
-        f'Find the exact text "{prompt}" in the uploaded documents. '
-        "Report matching passages and their sources."
-    )
 else:
     prompt = None
     query = None
@@ -415,17 +908,25 @@ if query:
             event_id = asyncio.run(send_rag_query_event(query, top_k, conversation_history))
             output = wait_for_run_output(event_id)
         except Exception as exc:
-            output = {"answer": f"The AI service is currently unavailable: {exc}", "sources": []}
+            output = {"answer": f"The AI service is currently unavailable: {exc}", "sources": [], "citations": []}
 
         answer = output.get("answer", "")
         sources = output.get("sources", [])
+        citations = output.get("citations", [])
 
-    assistant_message = {"role": "assistant", "content": answer or "I couldn't find relevant information in the uploaded documents.", "sources": sources}
+    assistant_message = {
+        "role": "assistant",
+        "content": answer or "I couldn't find relevant information in the uploaded documents.",
+        "sources": sources,
+        "citations": citations,
+    }
     st.session_state.messages.append(assistant_message)
 
     with st.chat_message("assistant"):
         st.markdown(assistant_message["content"])
-        if assistant_message["sources"]:
+        if assistant_message["citations"]:
+            render_citations(assistant_message["citations"])
+        elif assistant_message["sources"]:
             with st.expander("Sources"):
                 for source in assistant_message["sources"]:
                     st.write(f"- {source}")

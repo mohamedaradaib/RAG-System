@@ -1,14 +1,29 @@
 import pydantic
 
 
+class RAGChunk(pydantic.BaseModel):
+    text: str
+    page: str | int | None = None
+
+
 class RAGChunkAndSrc(pydantic.BaseModel):
-    chunks: list[str]
+    chunks: list[RAGChunk]
     source_id: str = None
+
+
+class RAGCitation(pydantic.BaseModel):
+    id: int
+    source: str
+    text: str
+    chunk_index: int | None = None
+    page: str | int | None = None
+    score: float
 
 
 class RAGSearchResult(pydantic.BaseModel):
     contexts: list[str]
     sources: list[str]
+    citations: list[RAGCitation] = pydantic.Field(default_factory=list)
     error: str | None = None
 
 

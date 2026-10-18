@@ -1,96 +1,70 @@
 # RAG Document Assistant
 
-An Aritifical Intelligence Document Assistant that utilizes Retrieval-Augmented Generation and lets you upload documents, index the contents in a vector database, and ask grounded questions about them using OpenAI models.
+A document question-answering app that uses retrieval-augmented generation (RAG) to answer questions from uploaded files and cite the supporting passages.
 
 ## Features
 
-- Upload multiple files in supported formats: PDF, DOCX, HTML, Markdown, TXT, and CSV
-- Extract text and split large documents into overlapping chunks
-- Generate embeddings with the OpenAI `text-embedding-3-large` model
-- Store chunks in a Qdrant collection keyed by document source
-- Search using hybrid ranking: vector similarity plus lexical overlap
-- Keep recent chat history for follow-up questions
-- Display source document names with responses
-- Delete individual indexed documents from the sidebar
-- Run ingestion and query flows asynchronously through Inngest
+- Upload PDF, DOCX, HTML, Markdown, TXT, and CSV files
+- Extract text and split documents into overlapping chunks
+- Create embeddings with OpenAI `text-embedding-3-large`
+- Store and search document chunks in Qdrant using vector and lexical ranking
+- Ask follow-up questions with recent conversation context
+- Inspect cited passages with page numbers or chunk references when available
+- View and delete indexed documents from the main-page library
+- Use suggested questions after at least one document has been indexed
+- Run ingestion and query workflows asynchronously through Inngest
 
-## How it works
+## How It Works
 
-Users upload documents in the Streamlit app, and the backend ingests them through a FastAPI/Inngest workflow that splits each file into chunks, embeds them with OpenAI, and stores them in Qdrant for retrieval. When a question is asked, the system embeds the query, searches the indexed chunks for the most relevant passages, and passes that grounded context to the LLM to generate an answer tied to the uploaded documents.
-
-## Tech stack
-
-- Python
-- Streamlit
-- FastAPI
-- Inngest
-- Qdrant
-- OpenAI API
-- LlamaIndex
+The Streamlit app sends uploaded files to FastAPI. Inngest runs the ingestion workflow, which extracts and chunks the text, creates embeddings, and stores the chunks in Qdrant. For a question, the app retrieves relevant chunks and sends that context to `gpt-4o-mini` to generate a grounded answer with citations.
 
 ## Getting Started
+
 ### Prerequisites
 
-- OpenAI API key
+- Docker with Docker Compose
+- Node.js and `npx` for the local Inngest development server
+- An OpenAI API key with access to the embedding and chat models
 
 ### Installation
 
-#### 1) Clone the repository
+1. Create a `.env` file in the project root:
 
-```bash
-git clone https://github.com/mohamedaradaib/rag-document-assistant.git
-cd rag-document-assistant
-```
+	```env
+	OPENAI_API_KEY=your_openai_api_key
+	```
 
-#### 2) Create an environment file
+2. Install the Python dependencies:
 
-Create a `.env` file in the project root:
+	```bash
+	uv sync
+	```
 
-```env
-OPENAI_API_KEY=your_openai_api_key
-```
+3. Start Qdrant:
 
-#### 3) Install dependencies
+	```bash
+	docker compose up -d
+	```
 
-```bash
-uv sync
-```
+4. Start the Inngest development server in a separate terminal:
 
-#### 4) Start Qdrant
+	```bash
+	npx --yes inngest-cli@latest dev
+	```
 
-```bash
-docker compose up -d
-```
+5. Start the FastAPI app in another terminal:
 
-#### 5) Start Inngest
+	```bash
+	uv run uvicorn main:app --reload --port 8000
+	```
 
-In a separate terminal:
+6. Start the Streamlit app in another terminal:
 
-```bash
-npx inngest-cli@latest dev
-```
+	```bash
+	uv run streamlit run streamlit_app.py
+	```
 
-#### 6) Start the FastAPI app
-
-In another seperate terminal:
-
-```bash
-uv run uvicorn main:app --reload --port 8000
-```
-
-#### 7) Start the Streamlit UI
-
-In another seperate terminal:
-
-```bash
-uv run streamlit run streamlit_app.py
-```
-
-Then open streamlit localhost url:
-
-```text
-http://localhost:8501
-```
+Then open streamlits localhost url: http://localhost:8501
 
 ## Live Demo
 [https://rag-document-assistant-production-443d.up.railway.app/](https://rag-document-assistant-production-443d.up.railway.app/)
