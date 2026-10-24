@@ -1,6 +1,6 @@
-# RAG Document Assistant
+# RAG System
 
-A document question-answering app that uses retrieval-augmented generation (RAG) to answer questions from uploaded files and cite the supporting passages.
+A retrieval-augmented generation (RAG) app that answers questions from uploaded content and cites the supporting passages.
 
 ## Features
 
@@ -11,7 +11,6 @@ A document question-answering app that uses retrieval-augmented generation (RAG)
 - Ask follow-up questions with recent conversation context
 - Inspect cited passages with page numbers or chunk references when available
 - View and delete indexed documents from the main-page library
-- Use suggested questions after at least one document has been indexed
 - Run ingestion and query workflows asynchronously through Inngest
 
 ## How It Works
@@ -64,14 +63,14 @@ The Streamlit app sends uploaded files to FastAPI. Inngest runs the ingestion wo
 	uv run streamlit run streamlit_app.py
 	```
 
-Then open streamlits localhost url: http://localhost:8501
+Open Streamlits localhost url http://localhost:8501
 
 ## Live Demo
-[https://rag-document-assistant-production-443d.up.railway.app/](https://rag-document-assistant-production-443d.up.railway.app/)
+[https://rag-system-443d.up.railway.app/](https://rag-system-443d.up.railway.app/)
 
 ## Screenshots
 ![alt text](image.png)
 
 ## License
 
-[LICENSE](LICENSE)
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.

@@ -1571,7 +1571,7 @@ wheels = [
 ]
 
 [[package]]
-name = "rag-document-assistant"
+name = "rag-system"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

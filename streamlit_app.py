@@ -13,7 +13,7 @@ from vector_db import QdrantStorage
 
 load_dotenv()
 
-st.set_page_config(page_title="RAG Document Assistant", page_icon="", layout="wide")
+st.set_page_config(page_title="RAG System", page_icon="", layout="wide")
 
 st.markdown(
     """
@@ -55,7 +55,7 @@ st.markdown(
     }
     .st-key-app-header [data-testid="stHorizontalBlock"] {
         display: grid !important;
-        grid-template-columns: 7rem minmax(0, 1fr) 7rem;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
         align-items: center;
         gap: 0.5rem;
     }
@@ -67,10 +67,21 @@ st.markdown(
     .st-key-app-header [data-testid="stPopoverButton"],
     .st-key-app-header .stLinkButton,
     .st-key-app-header .stLinkButton > a {
-        width: 100% !important;
+        width: auto !important;
         box-sizing: border-box;
         justify-content: center;
         white-space: nowrap;
+    }
+    .st-key-app-header [data-testid="stPopover"] {
+        width: max-content !important;
+    }
+    .st-key-app-header [data-testid="stColumn"]:last-child {
+        display: flex;
+        justify-content: flex-end;
+    }
+    .st-key-app-header [data-testid="stColumn"]:last-child .stLinkButton {
+        display: flex;
+        justify-content: flex-end;
     }
     .st-key-app-header .stLinkButton > a {
         background: transparent !important;
@@ -85,6 +96,26 @@ st.markdown(
         border: 0 !important;
         box-shadow: none !important;
         text-decoration: none !important;
+    }
+    .st-key-app-header .header-nav-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 2.5rem;
+        box-sizing: border-box;
+        padding: 0.6rem 0.5rem;
+        border: 1px solid rgba(244, 246, 247, 0.32);
+        border-radius: 0.5rem;
+        color: #f4f6f7 !important;
+        font-size: 0.875rem;
+        text-decoration: none !important;
+        white-space: nowrap;
+    }
+    .st-key-app-header .header-nav-button:hover,
+    .st-key-app-header .header-nav-button:focus-visible {
+        background: rgba(244, 246, 247, 0.1);
+        border-color: rgba(244, 246, 247, 0.65);
     }
     .st-key-app-header .header-title {
         font-size: 1.5rem;
@@ -214,6 +245,17 @@ st.markdown(
         font-weight: 700;
         margin: 0 0 1rem 0;
         color: var(--gray-100);
+    }
+    html, body, .stApp, [data-testid="stAppViewContainer"], section.main, .main,
+    [data-testid="stMain"] {
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+    }
+    html::-webkit-scrollbar, body::-webkit-scrollbar, .stApp::-webkit-scrollbar,
+    [data-testid="stAppViewContainer"]::-webkit-scrollbar, section.main::-webkit-scrollbar,
+    .main::-webkit-scrollbar, [data-testid="stMain"]::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
     }
     .fixed-footer {
         position: fixed;
@@ -410,7 +452,7 @@ st.markdown(
             padding: 0.45rem 0.65rem;
         }
         .st-key-app-header [data-testid="stHorizontalBlock"] {
-            grid-template-columns: 5.5rem minmax(0, 1fr) 5.5rem;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
             gap: 0.2rem;
         }
         .st-key-app-header .header-title {
@@ -439,8 +481,8 @@ st.markdown(
     }
     .block-container {
         max-width: 72rem;
-        padding-top: 2.25rem;
-        padding-bottom: 2rem;
+        padding-top: 3.75rem;
+        padding-bottom: 5rem;
         background: transparent !important;
     }
     .st-key-app-header {
@@ -464,56 +506,51 @@ st.markdown(
         border-right: 1px solid var(--line);
     }
     [data-testid="stFileUploader"] {
-        align-items: flex-start;
+        align-items: center;
     }
     [data-testid="stFileUploaderDropzone"] {
-        width: min(100%, 28rem);
-        min-height: 7rem !important;
-        margin: 0;
-        border: 1px dashed #858585;
-        border-radius: 8px;
-        background: #ffffff !important;
-        transition: border-color 0.18s ease, background 0.18s ease;
+        width: auto;
+        min-height: 0 !important;
+        margin-inline: auto;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent !important;
+        box-shadow: none;
     }
     [data-testid="stFileUploaderDropzone"]:hover {
-        border-color: var(--accent);
-        background: #ededed !important;
+        border-color: transparent;
+        background: transparent !important;
     }
-    .page-intro {
-        margin: 0 0 1.5rem;
-        padding: 1.25rem 0 1.35rem;
-        border-bottom: 1px solid #b8b8b8;
+    [data-testid="stFileUploaderDropzoneInstructions"] {
+        display: none !important;
     }
-    .page-intro .eyebrow {
-        color: var(--muted) !important;
-        font-size: 0.7rem;
-        letter-spacing: 0.12em;
+    [data-testid="stFileUploaderDropzone"] button {
+        width: 15rem;
+        height: 6rem;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
     }
-    .page-intro h1 {
-        color: var(--ink) !important;
-        font-family: Georgia, "Times New Roman", serif;
-        font-size: 2.4rem;
-        font-weight: 500;
-        line-height: 1.12;
-    }
-    .st-key-document-library {
-        margin: 0 0 2.25rem;
-        padding: 1.15rem 1.35rem 0.8rem;
-        border: 1px solid var(--line);
-        border-left: 3px solid var(--accent);
-        border-radius: 8px;
-        background: #fafafa;
-        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
-    }
-    .st-key-document-library [data-testid="stMarkdownContainer"] p {
+    .upload-hint,
+    .upload-formats {
+        margin: 0.25rem 0;
         color: var(--muted);
+        text-align: center;
     }
-    .st-key-document-library [data-testid="stHorizontalBlock"] {
-        gap: 2rem;
+    .upload-title {
+        margin: 3rem 0 0 !important;
+        color: var(--ink) !important;
+        font-size: clamp(1.5rem, 4vw, 2rem) !important;
+        font-weight: 700;
+        line-height: 1.2;
+        text-align: center;
     }
-    .st-key-document-library .library-source-row {
-        padding: 0.45rem 0;
-        border-bottom: 1px solid var(--line);
+    .upload-hint {
+        margin-top: 0.75rem !important;
+        margin-bottom: 1.25rem !important;
+    }
+    .upload-formats {
+        margin-bottom: 2.5rem !important;
     }
     .st-key-suggest_summary button,
     .st-key-suggest_dates button,
@@ -581,7 +618,6 @@ st.markdown(
     [data-testid="stChatMessage"] {
         border: 1px solid var(--line);
         border-radius: 8px;
-        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
     }
     [data-testid="stAlert"] {
         background: #e2e2e2 !important;
@@ -592,13 +628,17 @@ st.markdown(
         color: var(--ink) !important;
     }
     .fixed-footer {
-        position: relative;
-        margin-top: 3rem;
-        padding: 1rem;
-        color: var(--muted) !important;
-        background: transparent;
-        border-top: 1px solid var(--line);
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.75rem 1rem;
+        color: #d5dde1 !important;
+        background: #242b30;
+        border-top: 1px solid rgba(209, 213, 219, 0.12);
         font-size: 0.75rem;
+        z-index: 1000;
     }
     @media (max-width: 640px) {
         .block-container {
@@ -610,27 +650,77 @@ st.markdown(
         .st-key-app-header .header-title {
             font-size: 0.95rem;
         }
-        .page-intro {
-            padding: 1rem 0 1.1rem;
-        }
-        .page-intro h1 {
-            font-size: 1.85rem;
-        }
-        .st-key-document-library {
-            margin-bottom: 1.75rem;
-            padding: 0.9rem 0.85rem 0.6rem;
-        }
-        .st-key-document-library [data-testid="stHorizontalBlock"] {
-            gap: 0.75rem;
-        }
         [data-testid="stForm"] {
             padding: 0.9rem 0.85rem 0.35rem;
         }
         .fixed-footer {
-            margin-top: 2rem;
-            padding: 0.85rem 0.25rem;
-            line-height: 1.6;
+            padding: 0.5rem 0.25rem;
+            line-height: 1.4;
         }
+    }
+    html, body, .stApp, [data-testid="stAppViewContainer"], [data-testid="stMain"], section.main {
+        height: 100vh !important;
+        overflow: hidden !important;
+    }
+    .block-container {
+        height: 100vh;
+        padding-top: 4.25rem !important;
+        padding-bottom: 3.1rem !important;
+        overflow: hidden !important;
+    }
+    .block-container > [data-testid="stVerticalBlock"] {
+        height: 100%;
+    }
+    .block-container > [data-testid="stVerticalBlock"] > div:has(> .st-key-upload-area) {
+        flex: 1 1 auto !important;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .block-container > [data-testid="stVerticalBlock"] > div:has(> .st-key-chat-area) {
+        flex: 0 0 auto !important;
+    }
+    .st-key-upload-area {
+        flex: 1 1 auto !important;
+        height: auto !important;
+        justify-content: space-evenly;
+        align-items: center;
+        padding: 0;
+    }
+    .st-key-upload-area [data-testid="stElementContainer"],
+    .st-key-upload-area [data-testid="stMarkdownContainer"] {
+        height: auto !important;
+    }
+    .st-key-upload-area p, .st-key-upload-area h1 { line-height: 1.3 !important; }
+    .st-key-upload-area > * {
+        width: 100%;
+    }
+    .st-key-chat-area .stButton button:disabled:hover,
+    .st-key-chat-area .stButton button:disabled:focus {
+        background: transparent !important;
+        border-color: rgba(49, 51, 63, 0.2) !important;
+        transform: none !important;
+        box-shadow: none !important;
+        cursor: not-allowed;
+    }
+    .st-key-chat-area .stButton button { min-height: 2.25rem; padding: 0.25rem 0.75rem; }
+    .upload-title { margin: 0 !important; font-size: clamp(1.1rem, 3.6vh, 2rem) !important; }
+    .upload-hint { margin: 0 0 clamp(0.2rem, 1.2vh, 0.8rem) !important; font-size: clamp(0.8rem, 2vh, 1rem); }
+    .upload-formats { margin: clamp(0.2rem, 1.2vh, 0.8rem) 0 0 !important; font-size: clamp(0.7rem, 1.8vh, 0.9rem); }
+    [data-testid="stFileUploaderDropzone"] button {
+        width: clamp(10rem, 36vh, 20rem);
+        height: clamp(2.75rem, 14vh, 8rem);
+        padding: 0.5rem 1rem;
+    }
+    [data-testid="stFileUploaderDropzone"] button + * { display: none; }
+    [data-testid="stVerticalBlock"] { gap: clamp(0.15rem, 0.8vh, 0.5rem) !important; }
+    .stApp h3 { margin: 0 !important; padding: 0 !important; font-size: clamp(0.95rem, 2.4vh, 1.25rem) !important; }
+    [data-testid="stForm"] { padding: clamp(0.25rem, 1vh, 0.75rem) 1rem 0.25rem !important; }
+    [data-testid="stSliderTickBarMin"], [data-testid="stSliderTickBarMax"] { display: none !important; }
+    .st-key-chat-box {
+        max-height: 100%;
+        overflow-y: auto;
+        scrollbar-width: thin;
     }
     </style>
     """,
@@ -681,61 +771,56 @@ def render_citations(citations: list[dict]) -> None:
 
 header_slot = st.empty()
 with header_slot.container(key="app-header"):
-    _, title_column, contact_column = st.columns([1, 4, 1])
+    indexed_column, title_column, contact_column = st.columns([2, 4, 1])
+    with indexed_column:
+        with st.popover("Files", use_container_width=True):
+            try:
+                qdrant_storage = get_qdrant_storage()
+                indexed_sources = qdrant_storage.list_sources()
+            except Exception:
+                qdrant_storage = None
+                indexed_sources = []
+                index_unavailable = True
+            else:
+                index_unavailable = False
+
+            if index_unavailable:
+                st.caption("The document index is unavailable. Start Qdrant to manage indexed files.")
+            elif indexed_sources:
+                st.caption(f"{len(indexed_sources)} indexed document{'s' if len(indexed_sources) != 1 else ''}")
+                for source in indexed_sources:
+                    source_column, delete_column = st.columns([4, 1], vertical_alignment="center")
+                    source_column.text(source)
+                    if delete_column.button(
+                        "Delete",
+                        key=f"delete_source_{source}",
+                        help=f"Remove {source} from the vector index",
+                    ):
+                        try:
+                            qdrant_storage.delete_source(source)
+                            st.rerun()
+                        except Exception as exc:
+                            st.error(f"Couldn't remove {source}: {exc}")
+            else:
+                st.caption("No files indexed")
     with title_column:
-        st.markdown('<div class="header-title">RAG Document Assistant</div>', unsafe_allow_html=True)
+        st.markdown('<div class="header-title">RAG System</div>', unsafe_allow_html=True)
     with contact_column:
         st.link_button("Contact", "mailto:mohamedaradaib1@gmail.com", use_container_width=True)
 
-st.markdown('<div id="documents"></div>', unsafe_allow_html=True)
-st.markdown(
-    '<div class="page-intro"><div class="eyebrow">Knowledge workspace</div>'
-    '<h1>Ask your documents.</h1></div>',
-    unsafe_allow_html=True,
-)
-with st.container(key="document-library"):
-    try:
-        qdrant_storage = get_qdrant_storage()
-        indexed_sources = qdrant_storage.list_sources()
-        index_unavailable = False
-    except Exception:
-        qdrant_storage = None
-        indexed_sources = []
-        index_unavailable = True
-
-    sources_column, upload_column = st.columns([1, 1.45], vertical_alignment="top")
-    with sources_column:
-        st.subheader("Your library")
-        if index_unavailable:
-            st.caption("The document index is unavailable. Start Qdrant to manage indexed files.")
-        elif indexed_sources:
-            st.caption(f"{len(indexed_sources)} indexed document{'s' if len(indexed_sources) != 1 else ''}")
-            for source in indexed_sources:
-                source_column, delete_column = st.columns([4, 1], vertical_alignment="center")
-                source_column.text(source)
-                if delete_column.button(
-                    "Delete",
-                    key=f"delete_source_{source}",
-                    help=f"Remove {source} from the vector index",
-                ):
-                    try:
-                        qdrant_storage.delete_source(source)
-                        st.rerun()
-                    except Exception as exc:
-                        st.error(f"Couldn't remove {source}: {exc}")
-        else:
-            st.caption("No indexed documents yet. Upload a file to build your library.")
-
-    with upload_column:
-        st.subheader("Add documents")
-        st.caption("Upload files to ground answers in your own sources.")
-        uploaded = st.file_uploader(
-            "Add documents",
-            type=["pdf", "docx", "html", "htm", "txt", "md", "csv"],
-            accept_multiple_files=True,
-            label_visibility="collapsed",
-        )
-        st.caption("PDF, DOCX, HTML, Markdown, TXT, CSV")
+with st.container(key="upload-area"):
+    st.markdown('<h1 class="upload-title">Retrieval-Augmented Generation System</h1>', unsafe_allow_html=True)
+    st.markdown('<p class="upload-hint">Drag and drop or upload files here.</p>', unsafe_allow_html=True)
+    uploaded = st.file_uploader(
+        "Add documents",
+        type=["pdf", "docx", "html", "htm", "txt", "md", "csv"],
+        accept_multiple_files=True,
+        label_visibility="collapsed",
+    )
+    st.markdown(
+        '<p class="upload-formats">Supported formats: PDF, DOCX, HTML, Markdown, TXT, CSV.</p>',
+        unsafe_allow_html=True,
+    )
 
 async def send_rag_query_event(question: str, top_k: int, chat_history: list[dict] | None = None) -> None:
     client = get_inngest_client()
@@ -832,58 +917,49 @@ for notice_level, upload_notice in st.session_state.pop("upload_notices", []):
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-conversation_column, clear_column = st.columns([4, 2])
-with conversation_column:
-    st.subheader("Conversation")
-with clear_column:
-    if st.button(
-        "Clear chat",
-        icon=":material/delete_sweep:",
-        disabled=not st.session_state.messages,
-        help="Clear this conversation",
-        use_container_width=True,
-    ):
-        st.session_state.messages.clear()
-        st.rerun()
-
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-        if message.get("citations"):
-            render_citations(message["citations"])
-        elif message.get("sources"):
-            with st.expander("Sources"):
-                for source in message["sources"]:
-                    st.write(f"- {source}")
-
-if not st.session_state.messages:
-    st.caption("Try a question")
-    suggestion_columns = st.columns(3)
-    suggestions = [
-        ("Summarize key points", "Summarize the key points in my uploaded documents.", "suggest_summary"),
-        ("Find key dates", "What important dates or deadlines are mentioned?", "suggest_dates"),
-        ("Compare topics", "Compare the main ideas across my uploaded documents.", "suggest_compare"),
-    ]
-    for suggestion_column, (label, prompt, key) in zip(suggestion_columns, suggestions):
-        if suggestion_column.button(label, key=key, use_container_width=True, disabled=not indexed_sources):
-            st.session_state["rag_question_input"] = prompt
-
-with st.form("rag_query_form"):
-    question = st.text_input(
-        "Question",
-        placeholder="Upload and index a document to start asking",
-        key="rag_question_input",
-        disabled=not indexed_sources,
-    )
-    settings_column, ask_column = st.columns([4, 1], vertical_alignment="bottom")
-    with settings_column:
-        top_k = st.slider("Retrieval depth", min_value=1, max_value=10, value=1, step=1)
-    with ask_column:
-        ask_submitted = st.form_submit_button(
-            "Ask",
+chat_area = st.container(key="chat-area")
+with chat_area:
+    conversation_column, clear_column = st.columns([4, 2])
+    with conversation_column:
+        st.subheader("Conversation")
+    with clear_column:
+        if st.button(
+            "Clear chat",
+            disabled=not st.session_state.messages,
+            help="Clear this conversation",
             use_container_width=True,
+        ):
+            st.session_state.messages.clear()
+            st.rerun()
+
+    chat_box = st.container(key="chat-box")
+    with chat_box:
+        for message in st.session_state.messages:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+                if message.get("citations"):
+                    render_citations(message["citations"])
+                elif message.get("sources"):
+                    with st.expander("Sources"):
+                        for source in message["sources"]:
+                            st.write(f"- {source}")
+
+    with st.form("rag_query_form"):
+        question = st.text_input(
+            "Question",
+            placeholder="Upload and index a document to start asking",
+            key="rag_question_input",
             disabled=not indexed_sources,
         )
+        settings_column, ask_column = st.columns([4, 1], vertical_alignment="bottom")
+        with settings_column:
+            top_k = st.slider("Retrieval depth", min_value=1, max_value=10, value=1, step=1)
+        with ask_column:
+            ask_submitted = st.form_submit_button(
+                "Ask",
+                use_container_width=True,
+                disabled=not indexed_sources,
+            )
 
 if ask_submitted and question.strip():
     prompt = question.strip()
@@ -900,7 +976,7 @@ if query:
         if msg["role"] in {"user", "assistant"}
     ]
 
-    with st.chat_message("user"):
+    with chat_box, st.chat_message("user"):
         st.markdown(prompt)
 
     with st.spinner("Searching..."):
@@ -921,14 +997,6 @@ if query:
         "citations": citations,
     }
     st.session_state.messages.append(assistant_message)
+    st.rerun()
 
-    with st.chat_message("assistant"):
-        st.markdown(assistant_message["content"])
-        if assistant_message["citations"]:
-            render_citations(assistant_message["citations"])
-        elif assistant_message["sources"]:
-            with st.expander("Sources"):
-                for source in assistant_message["sources"]:
-                    st.write(f"- {source}")
-
-st.markdown('<div class="fixed-footer">© 2026 RAG Document Assistant | About | Terms of Service | Privacy Policy | Security | Disclosure</div>', unsafe_allow_html=True)
+st.markdown('<div class="fixed-footer">© 2026 RAG System | About | Terms of Service | Privacy Policy | Security | Disclosure</div>', unsafe_allow_html=True)

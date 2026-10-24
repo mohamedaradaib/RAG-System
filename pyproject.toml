@@ -1,7 +1,7 @@
 [project]
-name = "rag-document-assistant"
+name = "rag-system"
 version = "0.1.0"
-description = "RAG Document Assistant for local document Q&A workflows"
+description = "RAG System for question answering"
 readme = "README.md"
 authors = [
     { name = "Mohamed Aradaib", email = "mohamedaradaib1@gmail.com" }
@@ -24,7 +24,7 @@ dependencies = [
 package = false
 
 [project.scripts]
-rag-document-assistant = "main:main"
+rag-system = "main:main"
 
 [build-system]
 requires = ["uv_build>=0.12.0,<0.13.0"]
